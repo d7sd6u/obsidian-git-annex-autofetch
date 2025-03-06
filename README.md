@@ -1,9 +1,11 @@
 # Git Annex Autofetch
 
-*Do you know what git annex is? If not, you should definitely check [this](https://github.com/d7sd6u/obsidian-lazy-cached-vault-load?tab=readme-ov-file#wait-a-minute-what-are-folderindex-notes-what-are-ftags-what-do-you-mean-annexed) out.*
+_Do you know what git annex is? If not, you should definitely check [this](https://github.com/d7sd6u/obsidian-lazy-cached-vault-load?tab=readme-ov-file#wait-a-minute-what-are-folderindex-notes-what-are-ftags-what-do-you-mean-annexed) out._
 
-Allows you to seamlessly view, preview, embed (in notes and in canvas), download and share files (images, videos, PDFs, archives and any other) that are not present in the current annex repository. Works on mobile and on desktop.
+Seamlessly view, preview, embed (in notes and in canvas), download and share files (images, videos, PDFs, archives and any other) that are not present in the current git annex repository. Works on mobile and on desktop.
+
 ## Patches
+
 ### View
 
 https://github.com/user-attachments/assets/45fa88e6-d3a2-4f40-a03e-1f9b5503dfd9
@@ -35,46 +37,49 @@ Also you have to enter the template for blob urls, one specifically for compress
 On Linux with bind-fs, Docker and Traefik this is how it could be hosted:
 
 `/etc/fstab`:
+
 ```
 /home/user/Vault /home/user/server/vault-mirror fuse.bindfs nofail,perms=a+r:a-w,resolve-symlinks 0 2
 ```
+
 `~/server/docker-compose.yml`:
+
 ```yaml
 version: "3.8"
 services:
-  vault-static:
-    image: flashspys/nginx-static
-    restart: always
-    networks:
-      - proxy
-      - default
-    volumes:
-      - ./vault-mirror/.git/annex/objects:/static/
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.vault-static.loadbalancer.server.port=80"
-      - "traefik.http.routers.vaultstatic.rule=Host(`vaultstatic.your.host`) && PathPrefix(`/raw/secret/`)"
-      - "traefik.http.routers.vaultstatic.middlewares=stripauth-static,allowcorsall"
-      - "traefik.http.middlewares.stripauth-static.stripprefix.prefixes=/raw/secret"
-      - "traefik.http.middlewares.allowcorsall.headers.accesscontrolalloworiginlist=*"
-  vault-optimiser:
-    image: h2non/imaginary
-    restart: always
-    networks:
-      - proxy
-      - default
-    command: -enable-url-source -allowed-origins http://vault-static -http-cache-ttl 31556926
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.vault-optimiser.loadbalancer.server.port=9000"
-      - "traefik.http.routers.vault-optimiser.rule=Host(`vaultstatic.your.host`) && PathPrefix(`/secret/`)"
-      - "traefik.http.routers.vault-optimiser.middlewares=stripauth-optimiser,allowcorsall"
-      - "traefik.http.middlewares.stripauth-optimiser.stripprefix.prefixes=/secret"
+    vault-static:
+        image: flashspys/nginx-static
+        restart: always
+        networks:
+            - proxy
+            - default
+        volumes:
+            - ./vault-mirror/.git/annex/objects:/static/
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.services.vault-static.loadbalancer.server.port=80"
+            - "traefik.http.routers.vaultstatic.rule=Host(`vaultstatic.your.host`) && PathPrefix(`/raw/secret/`)"
+            - "traefik.http.routers.vaultstatic.middlewares=stripauth-static,allowcorsall"
+            - "traefik.http.middlewares.stripauth-static.stripprefix.prefixes=/raw/secret"
+            - "traefik.http.middlewares.allowcorsall.headers.accesscontrolalloworiginlist=*"
+    vault-optimiser:
+        image: h2non/imaginary
+        restart: always
+        networks:
+            - proxy
+            - default
+        command: -enable-url-source -allowed-origins http://vault-static -http-cache-ttl 31556926
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.services.vault-optimiser.loadbalancer.server.port=9000"
+            - "traefik.http.routers.vault-optimiser.rule=Host(`vaultstatic.your.host`) && PathPrefix(`/secret/`)"
+            - "traefik.http.routers.vault-optimiser.middlewares=stripauth-optimiser,allowcorsall"
+            - "traefik.http.middlewares.stripauth-optimiser.stripprefix.prefixes=/secret"
 networks:
-  default:
-    external: false
-  proxy:
-    external: true
+    default:
+        external: false
+    proxy:
+        external: true
 ```
 
 Then the templates would be:
@@ -83,9 +88,19 @@ Then the templates would be:
 https://vaultstatic.your.host/secret/resize?width=300&url=http://vault-static/{{{objectpath}}}
 https://vaultstatic.your.host/raw/secret/{{{objectpath}}}
 ```
+
 ## Limitations
 
 Currently it has to download PDF files on mobile for them to work. Sharing also requires downloading the shared file.
+
+## Workflows
+
+As git annex is cumbersome on Android phones, instead of Termux+git-annex I use the following setup:
+
+(Desktop) main git-annex repo <-> (Desktop) mobile-mirror git-annex repo <-> (Mobile) Syncthing sync folder
+
+Syncthing syncs git annex pointers just fine, so everything works out of the box. There are a few downsides however, downloaded files are synced from your phone to the mirror (so, double the bandwidth usage) and present files are duplicated on your desktop (so, double the storage usage for files that are present on your phone).
+
 ## Other plugins
 
 - [auto-folder-note-paste](https://github.com/d7sd6u/obsidian-auto-folder-note-paste) - makes sure your attachments are "inside" your note on paste and drag'n'drop by making your note a folder note
@@ -95,6 +110,7 @@ Currently it has to download PDF files on mobile for them to work. Sharing also 
 - [crosslink-advanced](https://github.com/d7sd6u/obsidian-crosslink-advanced) - adds commands to deal with [ftags](https://github.com/d7sd6u/obsidian-lazy-cached-vault-load?tab=readme-ov-file#wait-a-minute-what-are-folderindex-notes-what-are-ftags-what-do-you-mean-annexed)-oriented vaults: add ftags, create child note, open random unftagged file, etc.
 - [virtual-dirs](https://github.com/d7sd6u/obsidian-virtual-dirs) - adds "virtual" folder files / folder indexes. You can open them, you can search for them, but they do not take space and "materialise" whenever you want a _real_ folder note
 - [viewer-ftags](https://github.com/d7sd6u/obsidian-viewer-ftags) - add ftags as chips on top of markdown/file editors/previews. And children as differently styled chips too!
+
 ## Contributing
 
 Issues and patches are welcome. This plugin is intended to be used with other plugins and I would try to do my best to support this use case, but I retain the right to refuse supporting any given plugin for arbitrary reasons.
