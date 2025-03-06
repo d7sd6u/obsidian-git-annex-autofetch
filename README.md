@@ -101,6 +101,10 @@ As git annex is cumbersome on Android phones, instead of Termux+git-annex I use 
 
 Syncthing syncs git annex pointers just fine, so everything works out of the box. There are a few downsides however, downloaded files are synced from your phone to the mirror (so, double the bandwidth usage) and present files are duplicated on your desktop (so, double the storage usage for files that are present on your phone).
 
+## Network use
+
+This plugin only makes HTTP(S) requests using the templates provided in the settings tab of the plugin. No default templates are provided, thus no network requests are made before the user sets the settings.
+
 ## Other plugins
 
 - [auto-folder-note-paste](https://github.com/d7sd6u/obsidian-auto-folder-note-paste) - makes sure your attachments are "inside" your note on paste and drag'n'drop by making your note a folder note
