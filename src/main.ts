@@ -318,7 +318,7 @@ export default class Main extends PluginWithSettings(DEFAULT_SETTINGS) {
 				}
 			}
 			this.resourcePathOverrides.set(file.path, finalSrc);
-			return undefined;
+			return finalSrc;
 		} catch {
 			return undefined;
 		}
