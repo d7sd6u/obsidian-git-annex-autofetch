@@ -210,19 +210,31 @@ export default class Main extends PluginWithSettings(DEFAULT_SETTINGS) {
 								notice.hide();
 							}, 1000);
 						};
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 						next.apply(this, [
 							args[0],
 							override,
 							args[2],
 							args[3],
 							args[4],
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						] as any);
+						] as [
+							method: string,
+							url: string | URL,
+							async: boolean,
+							username?: string | null | undefined,
+							password?: string | null | undefined,
+						]);
 						return;
 					}
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-					next.apply(this, args as any);
+					next.apply(
+						this,
+						args as [
+							method: string,
+							url: string | URL,
+							async: boolean,
+							username?: string | null | undefined,
+							password?: string | null | undefined,
+						],
+					);
 
 					return;
 				};
