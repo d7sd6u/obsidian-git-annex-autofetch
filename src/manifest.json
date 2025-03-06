@@ -2,7 +2,7 @@
 	"id": "git-annex-autofetch",
 	"name": "Git Annex Autofetch",
 	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
+	"minAppVersion": "1.8.0",
 	"description": "Seamlessly view, preview, embed (in notes and in canvas), download and share files (images, videos, PDFs, archives and any other) that are not present in the current git annex repository. Works on mobile and on desktop.",
 	"author": "d7sd6u",
 	"authorUrl": "https://github.com/d7sd6u",
