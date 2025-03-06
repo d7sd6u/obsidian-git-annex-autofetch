@@ -2,7 +2,7 @@
 
 _Do you know what git annex is? If not, you should definitely check [this](https://github.com/d7sd6u/obsidian-lazy-cached-vault-load?tab=readme-ov-file#wait-a-minute-what-are-folderindex-notes-what-are-ftags-what-do-you-mean-annexed) out._
 
-Seamlessly view, preview, embed (in notes and in canvas), download and share files (images, videos, PDFs, archives and any other) that are not present in the current git annex repository. Works on mobile and on desktop.
+Seamlessly view, preview, embed (in notes and in canvas), download and share files (images, videos, PDFs, archives and any other filetypes) that are not present in the current git annex repository. Works on mobile and on desktop.
 
 ## Patches
 
