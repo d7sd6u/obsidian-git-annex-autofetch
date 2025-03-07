@@ -36,8 +36,7 @@ export class MainPluginSettingsTab extends PluginSettingTab {
 					.setPlaceholder(
 						`https://imaginary.example.org/very-very-secret-string/resize?width=300&url=http://nginx/{{{objectpath}}}`,
 					);
-				textArea.inputEl.style.minWidth = "250px";
-				textArea.inputEl.style.minHeight = "100px";
+				textArea.inputEl.classList.add("small-settings-text-area");
 			});
 		new Setting(containerEl)
 			.setName("Object storage URL template")
@@ -52,8 +51,7 @@ export class MainPluginSettingsTab extends PluginSettingTab {
 					.setPlaceholder(
 						`https://nginx.example.org/raw/very-very-secret-string/{{{objectpath}}}`,
 					);
-				textArea.inputEl.style.minWidth = "250px";
-				textArea.inputEl.style.minHeight = "100px";
+				textArea.inputEl.classList.add("small-settings-text-area");
 			});
 	}
 }

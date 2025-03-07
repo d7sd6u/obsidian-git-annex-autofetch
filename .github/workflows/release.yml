@@ -32,7 +32,7 @@ jobs:
               run: pnpm run build
 
             - name: Copy manifest and styles to dist
-              run: cp manifest.json dist/
+              run: cp manifest.json src/styles.css dist/
 
             - name: Release
               uses: softprops/action-gh-release@v1
@@ -43,3 +43,4 @@ jobs:
                   files: |
                       dist/main.js
                       dist/manifest.json
+                      dist/styles.css
