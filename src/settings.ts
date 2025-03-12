@@ -51,7 +51,9 @@ export class MainPluginSettingsTab extends PluginSettingTab {
 					.setPlaceholder(
 						`https://nginx.example.org/raw/very-very-secret-string/{{{objectpath}}}`,
 					);
-				textArea.inputEl.classList.add("small-settings-text-area");
+				textArea.inputEl.classList.add(
+					"git-annex-autofetch-small-settings-text-area",
+				);
 			});
 	}
 }
