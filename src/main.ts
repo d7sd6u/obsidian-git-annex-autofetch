@@ -117,7 +117,9 @@ export default class Main extends PluginWithSettings(DEFAULT_SETTINGS) {
 				}
 			});
 			patch();
-			this.app.workspace.on("active-leaf-change", patch);
+			this.registerEvent(
+				this.app.workspace.on("active-leaf-change", patch),
+			);
 		}
 	}
 
