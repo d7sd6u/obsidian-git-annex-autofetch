@@ -1,6 +1,6 @@
 {
 	"name": "git-annex-autofetch",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Seamlessly view, preview, embed (in notes and in Canvas), download and share files (images, videos, PDFs, archives and any other filetypes) that are not present in the current git-annex repository",
 	"main": "./src/main.ts",
 	"scripts": {
